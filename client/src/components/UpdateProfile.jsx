@@ -20,7 +20,7 @@ const UpdateProfile = ({ history }) => {
   useEffect(() => {
     axios({
       method: "GET",
-      url: `${process.env.REACT_APP_API}/user`,
+      url: `/api/user`,
       headers: {
         Authorization: token,
       },
@@ -38,22 +38,20 @@ const UpdateProfile = ({ history }) => {
     e.preventDefault();
     document.getElementById("form").reset();
     setUser({ buttonText: "Updating" });
-    const passwordError = document.querySelector(".password");
-    const activateMessage = document.querySelector(".activateMessage");
+    const updateMessage = document.querySelector(".updateMessage");
 
     //reset error messages
-    passwordError.textContent = "";
-
+    updateMessage.textContent="";
     axios({
       method: "PATCH",
-      url: `${process.env.REACT_APP_API}/update-profile`,
+      url: `/api/update-profile`,
       data: user,
       headers: {
         Authorization: token,
       },
     })
       .then((success) => {
-        activateMessage.textContent = success.data.msg;
+        updateMessage.textContent = success.data.msg;
       })
       .then(() => {
         setUser({ buttonText: "Update" });
@@ -62,17 +60,17 @@ const UpdateProfile = ({ history }) => {
         }, 3000);
       })
       .catch((err) => {
-        passwordError.textContent = err.response.data.msg;
+        updateMessage.textContent = err.response.data.msg;
         setUser({ buttonText: "Update" });
       });
   }
 
   const { firstName, lastName, email, buttonText } = user;
 
-  const signupForm = () => (
+  const updateProfileForm = () => (
     <form onSubmit={handleSubmit} id="form">
       <div className="form-group">
-        <div className="activateMessage text-success"></div>
+        <div className="updateMessage text-success"></div>
         <label htmlFor="firstName" className="text-muted">
           First Name
         </label>
@@ -123,7 +121,7 @@ const UpdateProfile = ({ history }) => {
       <div className="col-md-6 offset-md-3">
         <h1 className="pt-5 text-center"> Profile</h1>
         <p className="lead text-center"> Edit Profile</p>
-        {signupForm()}
+        {updateProfileForm()}
         <Link to="password" className="btn btn-md text-info pt-2">
           Change my password
         </Link>

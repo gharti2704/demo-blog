@@ -20,7 +20,7 @@ const Login = ({ history }) => {
     if (token) {
       axios({
         method: "POST",
-        url: `${process.env.REACT_APP_API}/login`,
+        url: `/api/login`,
         headers: {
           Authorization: token,
         },
@@ -47,7 +47,7 @@ const Login = ({ history }) => {
     errorMessage.textContent = "";
 
     axios
-      .post(`${process.env.REACT_APP_API}/login`, user)
+      .post(`/api/login`, user)
       .then((response) => {
         saveAuthTokenSession(response.data.token);
         setUser({ buttonText: "Submit" });
@@ -56,7 +56,7 @@ const Login = ({ history }) => {
         errorMessage.textContent = err.response.data.msg;
         setUser({ buttonText: "Submit" });
         setTimeout(() => {
-          window.location.reload();
+          // window.location.reload();
         }, 2000);
       });
   }

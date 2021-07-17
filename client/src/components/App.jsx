@@ -18,7 +18,7 @@ const App = () => {
     const errorMessage = document.querySelector(".msg");
     errorMessage.textContent = "";
     axios
-      .get(`${process.env.REACT_APP_API}/all-blogs`)
+      .get(`/api/all-blogs`)
       .then((res) => {
         setBlogs(res.data);
       })

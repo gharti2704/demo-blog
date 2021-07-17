@@ -5,7 +5,7 @@ module.exports.logout = (next) => {
 
   axios({
     method: "GET",
-    url: `${process.env.REACT_APP_API}/logout`,
+    url: `/api/logout`,
     headers: {
       Authorization: token,
     },

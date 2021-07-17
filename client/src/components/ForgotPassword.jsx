@@ -24,7 +24,7 @@ const ForgotPassword = () => {
     errorMessage.textContent = "";
 
     axios
-      .post(`${process.env.REACT_APP_API}/forgot-password`, email)
+      .post(`/api/forgot-password`, email)
       .then((response) => {
         successMessage.textContent = response.data.msg;
         setEmail({ buttonText: "Submit" });

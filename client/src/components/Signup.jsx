@@ -28,7 +28,7 @@ const Signup = () => {
     passwordError.textContent = "";
 
     axios
-      .post(`${process.env.REACT_APP_API}/signup`, user)
+      .post(`/api/signup`, user)
       .then((success) => {
         activateMessage.textContent = success.data.message;
         setUser({ buttonText: "Submit" });

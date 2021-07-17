@@ -15,7 +15,7 @@ const Activate = ({ match, history }) => {
 
     axios({
       method: "POST",
-      url: `${process.env.REACT_APP_API}/login`,
+      url: `/api/login`,
       headers: {
         Authorization: token,
       },
@@ -47,7 +47,7 @@ const Activate = ({ match, history }) => {
     activateMessage.textContent = "";
 
     axios
-      .post(`${process.env.REACT_APP_API}/activate`, { token })
+      .post(`/api/activate`, { token })
       .then((response) => {
         logUserIn(response.data);
       })

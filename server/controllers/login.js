@@ -7,6 +7,7 @@ module.exports.login = async function (req, res) {
   try {
     const user = await User.authenticate(email, password);
     const token = await createToken(user.id, user.firstName);
+    console.log(user.id);
     setToken(token, user.id).then(() => {
       res.status(200).json({ token });
     });

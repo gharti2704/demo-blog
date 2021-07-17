@@ -19,7 +19,7 @@ const ResetPassword = ({ match, history }) => {
 
     axios({
       method: "POST",
-      url: `${process.env.REACT_APP_API}/login`,
+      url: `/api/login`,
       headers: {
         Authorization: token,
       },
@@ -58,7 +58,7 @@ const ResetPassword = ({ match, history }) => {
 
     axios({
       method: "PATCH",
-      url: `${process.env.REACT_APP_API}/reset-password`,
+      url: `/api/reset-password`,
       data: password,
       headers: {
         Authorization: values.token,

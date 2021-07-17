@@ -7,7 +7,7 @@ const Feed = (props) => {
   const { feed } = props.location.state;
 
   useEffect(() => {
-    axios.patch(`${process.env.REACT_APP_API}/visit/${feed.id}`);
+    axios.patch(`/api/visit/${feed.id}`);
   });
 
   return (

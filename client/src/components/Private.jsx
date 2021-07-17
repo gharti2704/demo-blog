@@ -11,7 +11,7 @@ const Private = () => {
     message.textContent = "";
     axios({
       method: "GET",
-      url: `${process.env.REACT_APP_API}/blog`,
+      url: `/api/blog`,
       headers: {
         Authorization: toke,
       },

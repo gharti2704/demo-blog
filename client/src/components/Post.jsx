@@ -18,7 +18,7 @@ const Post = ({ history }) => {
     errorMessage.textContent = "";
 
     axios
-      .post(`${process.env.REACT_APP_API}/upload/${blogId}`, formData, {
+      .post(`/api/upload/${blogId}`, formData, {
         headers: {
           Authorization: token,
           "Content-Type": "multipart/form-data",
@@ -51,7 +51,7 @@ const Post = ({ history }) => {
 
     axios({
       method: "POST",
-      url: `${process.env.REACT_APP_API}/blog`,
+      url: `/api/blog`,
       data: post,
       headers: {
         Authorization: token,
