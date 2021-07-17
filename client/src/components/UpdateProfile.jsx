@@ -1,47 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Layout from "./Layout";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
-const Signup = () => {
+const UpdateProfile = ({ history }) => {
   const [user, setUser] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    password: "",
-    buttonText: "Submit",
+    buttonText: "Update",
   });
+
+  const token = window.sessionStorage.getItem("token");
 
   function handleChange(e) {
     setUser({ ...user, [e.target.name]: e.target.value });
   }
 
+  useEffect(() => {
+    axios({
+      method: "GET",
+      url: `${process.env.REACT_APP_API}/user`,
+      headers: {
+        Authorization: token,
+      },
+    })
+      .then((user) => {
+        const { firstName, lastName, email } = user.data;
+        setUser({ ...user, firstName, lastName, email, buttonText: "Update" });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   function handleSubmit(e) {
     e.preventDefault();
     document.getElementById("form").reset();
-    setUser({ buttonText: "Submitting" });
-    const emailError = document.querySelector(".email");
+    setUser({ buttonText: "Updating" });
     const passwordError = document.querySelector(".password");
     const activateMessage = document.querySelector(".activateMessage");
 
     //reset error messages
-    emailError.textContent = "";
     passwordError.textContent = "";
 
-    axios
-      .post(`${process.env.REACT_APP_API}/signup`, user)
+    axios({
+      method: "PATCH",
+      url: `${process.env.REACT_APP_API}/update-profile`,
+      data: user,
+      headers: {
+        Authorization: token,
+      },
+    })
       .then((success) => {
-        activateMessage.textContent = success.data.message;
-        setUser({ buttonText: "Submit" });
+        activateMessage.textContent = success.data.msg;
+      })
+      .then(() => {
+        setUser({ buttonText: "Update" });
+        setTimeout(() => {
+          history.push("/");
+        }, 3000);
       })
       .catch((err) => {
-        emailError.textContent = err.response.data.error.email;
-        passwordError.textContent = err.response.data.error.password;
-        setUser({ buttonText: "Submit" });
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
+        passwordError.textContent = err.response.data.msg;
+        setUser({ buttonText: "Update" });
       });
   }
+
+  const { firstName, lastName, email, buttonText } = user;
 
   const signupForm = () => (
     <form onSubmit={handleSubmit} id="form">
@@ -51,11 +77,11 @@ const Signup = () => {
           First Name
         </label>
         <input
+          defaultValue={firstName}
           onChange={handleChange}
           name="firstName"
           type="text"
           className="form-control"
-          placeholder="Enter first name"
         />
       </div>
       <div className="form-group">
@@ -63,43 +89,30 @@ const Signup = () => {
           Last Name
         </label>
         <input
+          defaultValue={lastName}
           onChange={handleChange}
           name="lastName"
           type="text"
           className="form-control"
-          placeholder="Enter last name"
         />
       </div>
+
       <div className="form-group">
         <label htmlFor="email" className="text-muted">
           Email
         </label>
         <input
-          onChange={handleChange}
+          defaultValue={email}
           name="email"
           type="text"
           className="form-control"
-          placeholder="Enter email"
+          disabled
         />
-        <div className="email text-danger"></div>
       </div>
 
-      <div className="form-group">
-        <label htmlFor="password" className="text-muted">
-          Password
-        </label>
-        <input
-          onChange={handleChange}
-          name="password"
-          type="password"
-          className="form-control"
-          placeholder="Enter password"
-        />
-        <div className="text-danger password"></div>
-      </div>
       <div className="pt-2">
-        <button className="btn btn-primary" id="button-addon1">
-          {user.buttonText}
+        <button className="btn btn-primary" type="submit">
+          {buttonText}
         </button>
       </div>
     </form>
@@ -108,11 +121,15 @@ const Signup = () => {
   return (
     <Layout>
       <div className="col-md-6 offset-md-3">
-        <h1 className="p-5text-center"> Signup</h1>
+        <h1 className="pt-5 text-center"> Profile</h1>
+        <p className="lead text-center"> Edit Profile</p>
         {signupForm()}
+        <Link to="password" className="btn btn-md text-info pt-2">
+          Change my password
+        </Link>
       </div>
     </Layout>
   );
 };
 
-export default Signup;
+export default UpdateProfile;
