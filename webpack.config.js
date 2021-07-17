@@ -1,3 +1,4 @@
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin");
 const path = require("path");
 
 const SRC_DIR = path.join(__dirname, "client", "src");
@@ -9,6 +10,7 @@ module.exports = {
     filename: "bundle.js",
     path: OUT_DIR,
   },
+  plugins: [new NodePolyfillPlugin()],
   module: {
     rules: [
       {
