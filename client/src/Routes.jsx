@@ -11,7 +11,7 @@ import PostRoute from "./components/PostRoute";
 import Post from "./components/Post";
 import UpdateProfileRoute from "./components/UpdateProfileRoute";
 import UpdateProfile from "./components/UpdateProfile";
-import ForgotPassword from "./components/forgotPassword";
+import ForgotPassword from "./components/ForgotPassword";
 import ResetPassword from "./components/ResetPassword";
 
 const Routes = () => {
