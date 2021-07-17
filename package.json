@@ -1,0 +1,19 @@
+{
+  "name": "demo-blog",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gharti2704/demo-blog.git"
+  },
+  "author": "Raju",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gharti2704/demo-blog/issues"
+  },
+  "homepage": "https://github.com/gharti2704/demo-blog#readme"
+}
